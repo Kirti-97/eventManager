@@ -109,4 +109,17 @@ public class DefaultEventManagerTest
         {
         }
     }
+
+    //TASK 1
+    @Test
+    public void testSimpleEventNotification()
+    {
+        EventListenerMock subEventListenerMock = new EventListenerMock(new Class[]{SubEvent.class});
+        EventListenerMock simpleEventListenerMock = new EventListenerMock(new Class[]{SimpleEvent.class});
+        eventManager.registerListener("subEventListener", subEventListenerMock);
+        eventManager.registerListener("simpleEventListener", simpleEventListenerMock);
+        eventManager.publishEvent(new SubEvent(this));
+        assertTrue(subEventListenerMock.isCalled());
+        assertFalse(simpleEventListenerMock.isCalled());
+    }
 }
