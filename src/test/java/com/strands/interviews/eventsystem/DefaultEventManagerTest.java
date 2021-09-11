@@ -1,5 +1,6 @@
 package com.strands.interviews.eventsystem;
 
+import com.strands.interviews.eventsystem.events.CreationEvent;
 import com.strands.interviews.eventsystem.events.SimpleEvent;
 import com.strands.interviews.eventsystem.events.SubEvent;
 import com.strands.interviews.eventsystem.impl.DefaultEventManager;
@@ -121,5 +122,17 @@ public class DefaultEventManagerTest
         eventManager.publishEvent(new SubEvent(this));
         assertTrue(subEventListenerMock.isCalled());
         assertFalse(simpleEventListenerMock.isCalled());
+    }
+
+    //TASK 2
+    @Test
+    public void testSpecialListner()
+    {
+        EventListenerMock specialEventListnerMock = new EventListenerMock(new Class[]{});
+        eventManager.registerListener("specialEventListener", specialEventListnerMock);
+        eventManager.publishEvent(new CreationEvent(this));
+        eventManager.publishEvent(new SimpleEvent(this));
+        eventManager.publishEvent(new SubEvent(this));
+        assertEquals(3, specialEventListnerMock.count);
     }
 }
