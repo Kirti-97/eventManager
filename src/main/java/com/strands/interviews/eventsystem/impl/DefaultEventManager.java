@@ -42,6 +42,10 @@ public class DefaultEventManager implements EventManager
         if (!specialListeners.isEmpty()){
             collectionList.addAll(specialListeners.values());
         }
+        //TASK 3
+        if(!eventClass.getSuperclass().equals(Object.class) && (listenersByClass.get(eventClass.getSuperclass()) != null)){
+            collectionList.addAll((List) listenersByClass.get(eventClass.getSuperclass()));
+        }
         return collectionList;
     }
 
